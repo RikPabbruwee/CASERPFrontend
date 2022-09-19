@@ -1,0 +1,17 @@
+<table>
+    <thead>
+        <td>Start</td>
+        <td>Duur</td>
+        <td>Titel</td>
+        <td>Cursisten</td>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cursusinstantie of cursusinstanties">
+            <td> {{ cursusinstantie.startDate }}</td>
+            <td> {{ cursusinstantie.duration }}</td>
+            <td> {{ cursusinstantie.titel }}</td>
+            <td> {{ cursusinstantie.cursusisten }}</td>
+
+        </tr>
+    </tbody>
+</table>

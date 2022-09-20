@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { CursusInstantie } from 'src/models/cursusInstantie';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,12 @@ export class CursusinstantiesService {
         this.subject.next(cursusInstanties);
       })
       return this.subject.asObservable();
+  }
+  sendImport(cursusinstanties: CursusInstantie[]){
+    this.httpClient
+      .post(this.url, JSON.stringify(cursusinstanties), {headers:{'Content-Type': 'application/json'}})
+      .subscribe((x) => {
+        console.log(x);
+      })
   }
 }

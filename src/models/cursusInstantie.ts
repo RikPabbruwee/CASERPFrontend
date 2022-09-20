@@ -4,6 +4,7 @@ export interface CursusInstantie{
     id: number,
     titel: string,
     cursusId: number,
+    cursusCode: string,
     startDate: string,    
     duration: number,
     cursusisten: number
@@ -12,8 +13,9 @@ export abstract class CursusInstantieFactory{
     public static create(input?:Partial<CursusInstantie>){
         let obj: CursusInstantie =  {
             id: 0,
-            titel: '',
+            titel: '',            
             cursusId: 0,
+            cursusCode: '',
             startDate: '1995-01-01',
             duration: 0,
             cursusisten: 0,

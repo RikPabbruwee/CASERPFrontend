@@ -1,4 +1,24 @@
-<p>cursusplanningimport works!</p>
+<div *ngIf="processedFile.error.isError">
+    <p *ngFor="let line of processedFile.foundLines">{{line}}</p>
+    <p>^^^ {{processedFile.error.text}} op regel {{processedFile.error.line}}</p>
+</div>
+<div *ngIf="!processedFile.error.isError && processedFile.cursusInstanties.length > 0">
+    <table>
+        <thead>
+            <td>Titel</td>
+            <td>Cursuscode</td>
+            <td>Duur</td>
+            <td>Startdatum</td>
+        </thead>
+        <tr *ngFor="let inst of processedFile.cursusInstanties">
+            <td>{{inst.titel}}</td>
+            <td>{{inst.cursusCode}}</td>
+            <td>{{inst.duration}} dagen</td>
+            <td>{{inst.startDate}}</td>
+        </tr>
+    </table>
+</div>
 <form>
     <input type="file" name="file" (change)="CheckFile($event)" >
 </form>
+<button *ngIf="!processedFile.error.isError && processedFile.cursusInstanties.length > 0" (click)="sendToBackend()"> Toevoegen aan database </button>

@@ -37,8 +37,9 @@ export class TxtFileHelper{
             }
             //Full "object" so push, format and reset
             if(counter == 4){
-                counter = 0;                
+                counter = 0;
                 obj.cursusInstanties.push(this.createCursusInstantieFromArray(temp));
+                temp = [];   
             }
         }
         return obj;
@@ -90,11 +91,10 @@ export class TxtFileHelper{
         return input;
     }
     checkFormatOfInputDate(input:string): ErrorObject{
-        let condition: boolean = input.startsWith('Startdatum:')
         //Check if startdatum: is correct
-        if(!condition){
+        if(!input.startsWith('Startdatum:')){
             return {
-                state: condition,
+                state: false,
                 message: "Begint niet met Startdatum:!"
             }
         }
@@ -108,11 +108,10 @@ export class TxtFileHelper{
         return {state:true, message: ""}
     }
     checkFormatOfInputDuration(input:string): ErrorObject{
-        let condition: boolean = input.startsWith('Duur:')
         //Check if startdatum: is correct
-        if(!condition){
+        if(!input.startsWith('Duur:')){
             return {
-                state: condition,
+                state: false,
                 message: "Begint niet met Duur:!"
             }
         }
@@ -125,6 +124,6 @@ export class TxtFileHelper{
         }
         return {state:true, message: ""}
     }
-    }
+}
 
 export interface ErrorObject{state: boolean, message: string}

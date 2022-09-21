@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CursusinstantiesComponent } from './components/cursusinstanties/cursusinstanties.component';
 import { CursusplanningimportComponent } from './components/cursusplanningimport/cursusplanningimport.component';
-import { NgbdSortableHeader } from './directives/sortable.directive.ts.directive';
 
 
 @NgModule({
@@ -14,7 +13,6 @@ import { NgbdSortableHeader } from './directives/sortable.directive.ts.directive
     AppComponent,
     CursusinstantiesComponent,
     CursusplanningimportComponent,
-    NgbdSortableHeader,
   ],
   imports: [
     BrowserModule,

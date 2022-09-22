@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs';
 import { CursusinstantiesService } from 'src/app/services/cursusinstanties.service';
 
 import { CursusinstantiesComponent } from './cursusinstanties.component';
@@ -35,7 +36,7 @@ describe('CursusinstantiesComponent', () => {
   //     })
   //     sut = TestBed.createComponent(CursusinstantiesComponent).componentInstance;
   //     cursusinstantiesService = TestBed.inject(CursusinstantiesService);
-  //     spyOn(cursusinstantiesService, 'getAll');
+  //     spyOn(cursusinstantiesService, 'getAll');//.and.returnValue(Observable.of(true));
   //   })
   //   it('should get all cursus instanties', () => {
   //     sut.ngOnInit();

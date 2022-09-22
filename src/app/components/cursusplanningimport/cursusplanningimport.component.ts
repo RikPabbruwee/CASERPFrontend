@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TxtFileHelper } from './TxtFileHelper';
 import { TxtFileHelperObject, TxtFileHelperObjectFactory } from "src/models/txtFileHelperObject";
 import { CursusinstantiesService } from 'src/app/services/cursusinstanties.service';
+import { FeedbackImports } from 'src/models/FeedbackImport';
 
 
 @Component({
@@ -11,7 +12,11 @@ import { CursusinstantiesService } from 'src/app/services/cursusinstanties.servi
 })
 export class CursusplanningimportComponent implements OnInit {
   public processedFile: TxtFileHelperObject = TxtFileHelperObjectFactory.create();
-  
+  public feedback: FeedbackImports = {
+    duplicateCursusInstanties: [],
+    newCursusInstanties: [],
+    newCursus: []
+  }
   constructor(private cursusinstantiesService: CursusinstantiesService) { }
   
   CheckFile(t:any){
@@ -24,6 +29,11 @@ export class CursusplanningimportComponent implements OnInit {
   }
   sendToBackend(){
     this.cursusinstantiesService.sendImport(this.processedFile.cursusInstanties)
+      .subscribe((x) => {
+        this.feedback = x;
+        console.log(this.feedback);
+      });
+    
   }
   ngOnInit(): void {
   }

@@ -1,44 +1,56 @@
-import { AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import * as moment from 'moment';
 import { CursusinstantiesService } from 'src/app/services/cursusinstanties.service'
 import { CursusInstantie } from 'src/models/cursusInstantie';
-import {MatTableModule, MatTableDataSource} from '@angular/material/table'
-import {MatSort, Sort} from '@angular/material/sort';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
 @Component({
   selector: 'app-cursusinstanties',
   templateUrl: './cursusinstanties.component.html',
   styleUrls: ['./cursusinstanties.component.scss']
 })
-export class CursusinstantiesComponent implements OnInit, AfterViewInit {
+export class CursusinstantiesComponent implements OnInit {
   cursusinstanties: CursusInstantie[] = [];
-  displayedColumns: string[] = ['Start', 'Duur', 'Titel', 'Cursisten'];
-  dataSource = new MatTableDataSource(this.cursusinstanties);
+  date: string = "";
+  addDateForm = new FormGroup({
+    week: new FormControl(0, {
+      validators: [Validators.required],
+      nonNullable: true, 
+    }),
+    year: new FormControl(0, {
+      validators: [Validators.required],
+      nonNullable: true,
+    })
+  });
   constructor(
-    private cursusinstantiesService: CursusinstantiesService,
-    private _liveAnnouncer: LiveAnnouncer
+    private cursusinstantiesService: CursusinstantiesService
   ) { }
-  //Added "= new MatSort" may break
-  @ViewChild(MatSort) sort: MatSort = new MatSort;
-
+  get week(){
+    return this.addDateForm.controls.week.getRawValue()
+  }
+  get year(){
+    return this.addDateForm.controls.year.getRawValue()
+  }
   ngOnInit(): void {
-    this.cursusinstantiesService.getAll()
+    this.getData();
+  }
+  getData(){
+    
+    if(this.year != 0){
+      let t = moment();
+      let year: number = this.year == 0 ? 
+        parseInt(moment().format('YYYY')) : this.year; 
+      let week: number = this.week == 0 ? 
+        parseInt(moment().format('ww')): this.week
+      console.log("Week:", week)
+      t.year(year);
+      t.week(week);
+      console.log("moment date", t);
+      this.date = `${t.year()}-${t.month()+1}-${t.date()}`;
+      console.log("new date", this.date);
+    }
+    this.cursusinstantiesService.getAll(this.date)
       .subscribe((cursusinstanties: CursusInstantie[]) => {
         this.cursusinstanties = cursusinstanties;
       })
   }
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
 }

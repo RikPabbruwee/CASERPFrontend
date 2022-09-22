@@ -3,22 +3,32 @@
     <p>^^^ {{processedFile.error.text}} op regel {{processedFile.error.line}}</p>
 </div>
 <div *ngIf="!processedFile.error.isError && processedFile.cursusInstanties.length > 0">
-    <table>
-        <thead>
-            <td>Titel</td>
-            <td>Cursuscode</td>
-            <td>Duur</td>
-            <td>Startdatum</td>
-        </thead>
-        <tr *ngFor="let inst of processedFile.cursusInstanties">
-            <td>{{inst.titel}}</td>
-            <td>{{inst.cursusCode}}</td>
-            <td>{{inst.duration}} dagen</td>
-            <td>{{inst.startDate}}</td>
-        </tr>
-    </table>
+    <app-cursusinstantie-table [data]="processedFile.cursusInstanties"></app-cursusinstantie-table>
 </div>
 <form>
     <input type="file" name="file" (change)="CheckFile($event)" >
 </form>
 <button *ngIf="!processedFile.error.isError && processedFile.cursusInstanties.length > 0" (click)="sendToBackend()"> Toevoegen aan database </button>
+<div *ngIf="feedback.duplicateCursusInstanties.length != 0">
+    Al bestaande instanties({{feedback.duplicateCursusInstanties.length}}):<br>
+    <app-cursusinstantie-table [data]="feedback.duplicateCursusInstanties"></app-cursusinstantie-table>
+</div>
+<div *ngIf="feedback.newCursusInstanties.length != 0">
+    Nieuw toegevoegde instanties({{feedback.newCursusInstanties.length}}):<br>
+    <app-cursusinstantie-table [data]="feedback.newCursusInstanties"></app-cursusinstantie-table>
+</div>
+<div *ngIf="feedback.newCursus.length != 0">
+    Nieuwe cursus toegevoegd({{feedback.newCursus.length}}):
+    <table>
+        <thead>
+            <td>Titel</td>
+            <td>Code</td>
+            <td>Duur</td>
+        </thead>
+        <tr *ngFor="let cursus of feedback.newCursus">
+            <td>{{cursus.titel}}</td>
+            <td>{{cursus.code}}</td>
+            <td>{{cursus.duur}}</td>
+        </tr>
+    </table>
+</div>

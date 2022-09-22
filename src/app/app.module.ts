@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CursusinstantiesComponent } from './components/cursusinstanties/cursusinstanties.component';
 import { CursusplanningimportComponent } from './components/cursusplanningimport/cursusplanningimport.component';
+import { CursusinstantieTableComponent } from './components/cursusinstantie-table/cursusinstantie-table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,12 +15,15 @@ import { CursusplanningimportComponent } from './components/cursusplanningimport
     AppComponent,
     CursusinstantiesComponent,
     CursusplanningimportComponent,
+    CursusinstantieTableComponent,
   ],
   imports: [
     BrowserModule,
     MatTableModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

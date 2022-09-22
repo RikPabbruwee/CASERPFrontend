@@ -4,7 +4,7 @@ import { ErrorObject, TxtFileHelper } from "./TxtFileHelper";
 describe('TxtFileHelper', () => {
     let string: string;
     let sut: TxtFileHelper;
-    beforeAll(() => {
+    beforeEach(() => {
         string = `Titel: C# Programmeren\nCursuscode: CNETIN\nDuur: 5 dagen\nStartdatum: 8/10/2018\n\n`;
         string +=`Titel: C# Programmeren\nCursuscode: CNETIN\nDuur: 5 dagen\nStartdatum: 15/10/2018\n\n`;
         string +=`Titel: Java Persistence API\nCursuscode: JPA\nDuur: 2 dagen\nStartdatum: 15/10/2018\n\n`;
@@ -14,7 +14,7 @@ describe('TxtFileHelper', () => {
     });
     describe('Loop', () => {
         let result: TxtFileHelperObject;
-        beforeAll(() => {
+        beforeEach(() => {
             result = sut.Loop();
             console.log(result);
         })

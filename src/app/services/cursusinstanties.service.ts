@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { CursusInstantie } from 'src/models/cursusInstantie';
-import { JsonPipe } from '@angular/common';
 import { FeedbackImports } from 'src/models/FeedbackImport';
 
 @Injectable({
@@ -16,21 +15,28 @@ export class CursusinstantiesService {
   cursusInstanties: CursusInstantie[] = [];
 
   getAll(date: string): Observable<CursusInstantie[]> {
-    let test = date != '' ? `?week=${date}`: '';
-    console.log("Date in getAll", test);
+    let dateParameter = date != '' ? `?week=${date}`: '';
     this.httpClient
     //I don't know if this is injectable but the backend wants a date so probably not
-      .get<CursusInstantie[]>(this.url + test)
+      .get<CursusInstantie[]>(this.url + dateParameter)
       .subscribe((cursusInstanties: CursusInstantie[]) => {
         this.cursusInstanties = cursusInstanties;
         this.subject.next(cursusInstanties);
       })
       return this.subject.asObservable();
   }
-  sendImport(cursusinstanties: CursusInstantie[]): Observable<FeedbackImports>{
+  sendImport(cursusinstanties: CursusInstantie[], dateObject?: {startDate: Date, endDate: Date} | null): Observable<FeedbackImports>{
+    let optionalParamaters: string = "";
+    if(dateObject != null){
+      console.log("Startdate: ", dateObject.startDate);
+      console.log("Enddate: ", dateObject.endDate);
+      optionalParamaters += `?startDate=${dateObject.startDate}`;
+      optionalParamaters += `&endDate=${dateObject.endDate}`;
+    }
+    optionalParamaters =  optionalParamaters != '' ? optionalParamaters : ''
     return this.httpClient
       .post<FeedbackImports>(
-        this.url, 
+        this.url + optionalParamaters, 
         JSON.stringify(cursusinstanties), 
         {headers:{'Content-Type': 'application/json'}})
   }

@@ -8,17 +8,42 @@
 <form>
     <input type="file" name="file" (change)="CheckFile($event)" >
 </form>
+<form [formGroup]="dateForm">
+    <label for="startDate">
+       Start datum<label *ngIf="(!startDate.dirty)">?</label>
+    </label>
+    <input formControlName="startDate" name="startDate" type="date">
+    <label for="endDate" *ngIf="(startDate.dirty)">
+        Eind datum
+    </label>
+    <input formControlName="endDate" name="endDate" type="date" *ngIf="(startDate.dirty)">
+</form>
 <button *ngIf="!processedFile.error.isError && processedFile.cursusInstanties.length > 0" (click)="sendToBackend()"> Toevoegen aan database </button>
+
+<!--Return from the server-->
+<div *ngIf="feedback.duplicateCursusInstanties.length != 0 || feedback.newCursusInstanties.length != 0 || feedback.outOfRangeCursusInstanties.length != 0 || feedback.newCursus.length != 0">
+    Snel overzicht: 
+    <p *ngIf="feedback.duplicateCursusInstanties.length != 0"> Al bestaande instanties({{feedback.duplicateCursusInstanties.length}}) </p>
+    <p *ngIf="feedback.newCursusInstanties.length != 0"> Nieuw toegevoegde instanties({{feedback.newCursusInstanties.length}}) </p>
+    <p *ngIf="feedback.outOfRangeCursusInstanties.length != 0"> Instanties buiten de gegeven datums({{feedback.outOfRangeCursusInstanties.length}}) </p>
+    <p *ngIf="feedback.newCursus.length != 0"> Nieuwe cursus toegevoegd({{feedback.newCursus.length}}) </p>
+    <hr>
+</div>
+
 <div *ngIf="feedback.duplicateCursusInstanties.length != 0">
-    Al bestaande instanties({{feedback.duplicateCursusInstanties.length}}):<br>
+    Al bestaande instanties:<br>
     <app-cursusinstantie-table [data]="feedback.duplicateCursusInstanties"></app-cursusinstantie-table>
 </div>
 <div *ngIf="feedback.newCursusInstanties.length != 0">
-    Nieuw toegevoegde instanties({{feedback.newCursusInstanties.length}}):<br>
+    Nieuw toegevoegde instanties:<br>
     <app-cursusinstantie-table [data]="feedback.newCursusInstanties"></app-cursusinstantie-table>
 </div>
+<div *ngIf="feedback.outOfRangeCursusInstanties.length != 0">
+    Instanties buiten de gegeven datums:
+    <app-cursusinstantie-table [data]="feedback.outOfRangeCursusInstanties"></app-cursusinstantie-table>
+</div>
 <div *ngIf="feedback.newCursus.length != 0">
-    Nieuwe cursus toegevoegd({{feedback.newCursus.length}}):
+    Nieuwe cursus toegevoegd:
     <table>
         <thead>
             <td>Titel</td>

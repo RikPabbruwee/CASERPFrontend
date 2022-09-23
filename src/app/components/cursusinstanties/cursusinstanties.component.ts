@@ -30,23 +30,30 @@ export class CursusinstantiesComponent implements OnInit {
   get year(){
     return this.addDateForm.controls.year.getRawValue()
   }
-  ngOnInit(): void {
+  minusOneWeek(){
+    this.addDateForm.controls.week.setValue(this.week - 1);
     this.getData();
   }
-  getData(){
-    
+  plusOneWeek(){
+    this.addDateForm.controls.week.setValue(this.week + 1);
+    this.getData();
+  }
+  ngOnInit(): void {
+    moment.locale('nl')
+    this.addDateForm.controls.week.setValue(moment().week());
+    this.addDateForm.controls.year.setValue(moment().year());
+    this.getData();
+  }
+  getData(){    
     if(this.year != 0){
-      let t = moment();
+      let currentDate = moment();
       let year: number = this.year == 0 ? 
         parseInt(moment().format('YYYY')) : this.year; 
       let week: number = this.week == 0 ? 
         parseInt(moment().format('ww')): this.week
-      console.log("Week:", week)
-      t.year(year);
-      t.week(week);
-      console.log("moment date", t);
-      this.date = `${t.year()}-${t.month()+1}-${t.date()}`;
-      console.log("new date", this.date);
+      currentDate.year(year);
+      currentDate.week(week);
+      this.date = `${currentDate.year()}-${currentDate.month()+1}-${currentDate.date()}`;
     }
     this.cursusinstantiesService.getAll(this.date)
       .subscribe((cursusinstanties: CursusInstantie[]) => {

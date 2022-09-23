@@ -70,11 +70,11 @@ describe('TxtFileHelper', () => {
                 expect(sut.checkFormatOfInputDuration(lineDuration))
                     .toEqual(NoError);
             });
-            it('should not be a correct date', () => {
+            it('missing prefix should not be a correct date ', () => {
                 expect(sut.checkFormatOfInputDuration("5 dagen"))
                     .toEqual({state: false, message: "Begint niet met Duur:!"});
             });
-            it('should not be a correct date', () => {
+            it('incorrect format should not be a correct date', () => {
                 expect(sut.checkFormatOfInputDuration("Duur: 5"))
                     .toEqual({state: false, message: "Duratie komt niet overeen met het verwachten formaat, voorbeeld 5 dagen;"});
             });
@@ -92,21 +92,21 @@ describe('TxtFileHelper', () => {
             });
         });
         describe('findFormatError', () => {
-            it('should return a NoError', () => {
+            it('title should return a NoError', () => {
                 NoError.message = "Begint niet met Titel:!";
                 expect(sut.findFormatError(1, lineTitle))
                     .toEqual(NoError);
             });
-            it('should return a NoError', () => {
+            it('cursuscode should return a NoError', () => {
                 NoError.message = "Begint niet met Cursuscode:!";
                 expect(sut.findFormatError(2, lineCode))
                     .toEqual(NoError);
             });
-            it('should return a NoError', () => {
+            it('duration should return a NoError', () => {
                 expect(sut.findFormatError(3, lineDuration))
                     .toEqual(NoError);
             });
-            it('should return a NoError', () => {
+            it('date should return a NoError', () => {
                 expect(sut.findFormatError(4, lineDate))
                     .toEqual(NoError);
             });

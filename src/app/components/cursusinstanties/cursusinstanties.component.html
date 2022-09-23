@@ -1,8 +1,9 @@
-<form [formGroup]="addDateForm">
-<label for="weeknumber">Weeknummer:</label> 
-<input name="weeknumber" type="number" formControlName="week">
-<label for="year">Jaar:</label>
-<input name="year" type="number" formControlName="year">
-<button [disabled]="addDateForm.invalid" (click)="getData()">Data ophalen voor deze week</button>
-</form>
+Week: <label class='clickableElement' (click)="minusOneWeek()">◄</label>{{week}}<label class='clickableElement' (click)="plusOneWeek()">►</label> Jaar: {{year}}
 <app-cursusinstantie-table [data]="cursusinstanties"></app-cursusinstantie-table>
+<form [formGroup]="addDateForm">
+    <label for="weeknumber">Weeknummer:</label> 
+    <input name="weeknumber" type="number" formControlName="week">
+    <label for="year">Jaar:</label>
+    <input name="year" type="number" formControlName="year">
+    <button [disabled]="addDateForm.invalid" (click)="getData()">Data ophalen voor deze week</button>
+</form>

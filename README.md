@@ -1,3 +1,8 @@
+# eigen stukje
+
+De frontend heeft de default readme van angular er bij in en is doormiddel 
+van npm install -> ng serve op te starten of te builden en te deployen op een eigen webserver
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.

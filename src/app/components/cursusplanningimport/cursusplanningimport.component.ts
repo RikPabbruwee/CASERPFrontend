@@ -58,6 +58,7 @@ export class CursusplanningimportComponent implements OnInit {
     
   }
   ngOnInit(): void {
+    
   }
 
 }

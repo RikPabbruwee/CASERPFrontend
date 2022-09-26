@@ -1,4 +1,4 @@
-Week: <label class='clickableElement' (click)="minusOneWeek()">◄</label>{{week}}<label class='clickableElement' (click)="plusOneWeek()">►</label> Jaar: {{year}}
+Weekoverzicht Week: <label class='clickableElement' (click)="minusOneWeek()">◄</label>{{week}}<label class='clickableElement' (click)="plusOneWeek()">►</label> Jaar: {{year}} <button (click)="addToFavoriteWeek()">Toevoegen aan favoriten</button>
 <app-cursusinstantie-table [data]="cursusinstanties"></app-cursusinstantie-table>
 <form [formGroup]="addDateForm">
     <label for="weeknumber">Weeknummer:</label> 
@@ -7,3 +7,11 @@ Week: <label class='clickableElement' (click)="minusOneWeek()">◄</label>{{week
     <input name="year" type="number" formControlName="year">
     <button [disabled]="addDateForm.invalid" (click)="getData()">Data ophalen voor deze week</button>
 </form>
+<br>
+
+<ul *ngIf="favoriteWeeks.length > 0">
+    Favoriten Weken: 
+    <li *ngFor="let week of favoriteWeeks">
+        <a href="/cursusinstanties?week={{week.week}}&year={{week.year}}"> Week: {{week.week}} Jaar: {{week.year}}</a>
+    </li>
+</ul>

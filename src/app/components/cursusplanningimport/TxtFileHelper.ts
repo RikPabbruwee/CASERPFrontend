@@ -11,16 +11,16 @@ export class TxtFileHelper{
         let obj: TxtFileHelperObject = TxtFileHelperObjectFactory.create();
         let counter: number = 0;
         let temp: string[] = []
-        for (const line of this.file.split(/[\n]+/)){
-            //Last line is always empty so throw it out 
-            //so it doesn't cause an error at the end
-            if(line == "") continue;  
-            //Add line to history
-            obj.foundLines.push(line);
-
+        for (const line of this.file.split(/\n/)){
             //Upping counters
             this.globalCounter++;
             counter++;
+
+            //Last line is always empty so throw it out 
+            //so it doesn't cause an error at the end
+            if(line == "" && counter != 5) continue;  
+            //Add line to history
+            obj.foundLines.push(line);
 
             //Check the line for errors 
             let lineCheck: ErrorObject = this.findFormatError(counter, line);
@@ -33,12 +33,13 @@ export class TxtFileHelper{
                 console.log("Error found!");
                 return obj;
             }else{
-                temp.push(line);
+                if(counter !=5)
+                    temp.push(line);
             }
             //Full "object" so push, format and reset
-            if(counter == 4){
-                counter = 0;
+            if(counter == 5){
                 obj.cursusInstanties.push(this.createCursusInstantieFromArray(temp));
+                counter = 0;
                 temp = [];   
             }
         }
@@ -61,7 +62,8 @@ export class TxtFileHelper{
                 return this.checkFormatOfInputDuration(s);
             case(4):                
                 return this.checkFormatOfInputDate(s);
-                
+            case(5):
+                return {state:s == "", message: "Geen lege lijn!"} 
         }
         return {state:false, message: "Er is iets fout gegaan!"}
     }

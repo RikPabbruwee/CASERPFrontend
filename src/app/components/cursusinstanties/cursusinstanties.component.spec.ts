@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs';
-import { CursusinstantiesService } from 'src/app/services/cursusinstanties.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CursusinstantiesComponent } from './cursusinstanties.component';
 
@@ -11,7 +10,7 @@ describe('CursusinstantiesComponent', () => {
   describe('Auto generated tests', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule ],
+        imports: [HttpClientTestingModule, FormsModule],
         declarations: [ CursusinstantiesComponent ]
       })
       .compileComponents();

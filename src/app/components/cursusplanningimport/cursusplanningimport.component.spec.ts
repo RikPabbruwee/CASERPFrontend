@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CursusinstantiesService } from 'src/app/services/cursusinstanties.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CursusplanningimportComponent } from './cursusplanningimport.component';
+import { FormsModule } from '@angular/forms';
 
 describe('CursusplanningimportComponent', () => {
   let component: CursusplanningimportComponent;
@@ -9,7 +10,7 @@ describe('CursusplanningimportComponent', () => {
   describe('Auto generated tests', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule ],
+        imports: [HttpClientTestingModule],
         declarations: [ CursusplanningimportComponent ]
       })
       .compileComponents();

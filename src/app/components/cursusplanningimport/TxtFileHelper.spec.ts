@@ -92,24 +92,68 @@ describe('TxtFileHelper', () => {
             });
         });
         describe('findFormatError', () => {
-            it('title should return a NoError', () => {
-                NoError.message = "Begint niet met Titel:!";
-                expect(sut.findFormatError(1, lineTitle))
-                    .toEqual(NoError);
-            });
-            it('cursuscode should return a NoError', () => {
-                NoError.message = "Begint niet met Cursuscode:!";
-                expect(sut.findFormatError(2, lineCode))
-                    .toEqual(NoError);
-            });
-            it('duration should return a NoError', () => {
-                expect(sut.findFormatError(3, lineDuration))
-                    .toEqual(NoError);
-            });
-            it('date should return a NoError', () => {
-                expect(sut.findFormatError(4, lineDate))
-                    .toEqual(NoError);
-            });
+            describe('findFormatError No Error', () => {
+                it('title should return a NoError', () => {
+                    NoError.message = "Begint niet met Titel:!";
+                    expect(sut.findFormatError(1, lineTitle))
+                        .toEqual(NoError);
+                });
+                it('cursuscode should return a NoError', () => {
+                    NoError.message = "Begint niet met Cursuscode:!";
+                    expect(sut.findFormatError(2, lineCode))
+                        .toEqual(NoError);
+                });
+                it('duration should return a NoError', () => {
+                    expect(sut.findFormatError(3, lineDuration))
+                        .toEqual(NoError);
+                });
+                it('date should return a NoError', () => {
+                    expect(sut.findFormatError(4, lineDate))
+                        .toEqual(NoError);
+                });
+                it('Empty string should return a NoError', () => {
+                    NoError.message = "Geen lege lijn!";
+                    expect(sut.findFormatError(5, ""))
+                        .toEqual(NoError);
+                });
+            })
+            describe('findFormatError Error', () => {
+                it('title should return an error', () => {
+                    expect(sut.findFormatError(1, lineCode))
+                        .toEqual({
+                            state: false,
+                            message: "Begint niet met Titel:!"
+                        });
+                });
+                it('cursuscode should return an error', () => {
+                    expect(sut.findFormatError(2, lineTitle))
+                        .toEqual({
+                            state: false,
+                            message: "Begint niet met Cursuscode:!"
+                        });
+                });
+                it('duration should return an error', () => {
+                    expect(sut.findFormatError(3, lineTitle))
+                        .toEqual({
+                            state: false,
+                            message: "Begint niet met Duur:!"
+                        });
+                });
+                it('date should return an error', () => {
+                    expect(sut.findFormatError(4, lineTitle))
+                        .toEqual({
+                            state: false,
+                            message: "Begint niet met Startdatum:!"
+                        });
+                });
+                it('Empty string should return an error', () => {
+                    expect(sut.findFormatError(5, lineTitle))
+                        .toEqual({
+                            state: false,
+                            message: "Geen lege lijn!"
+                        });
+                });
+            });        
         });
         
     });

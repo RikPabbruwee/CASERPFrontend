@@ -1,15 +1,15 @@
-<table>
+<table *ngIf="data.length != 0">
     <thead>
-        <td>Titel</td>
-        <td>Cursuscode</td>
+        <td>Start</td>
         <td>Duur</td>
-        <td>Startdatum</td>
+        <td>Titel</td>
+        <td>Cursisten</td>
     </thead>
     <tr *ngFor="let inst of data">
-        <td>{{inst.titel}}</td>
-        <td>{{inst.cursusCode}}</td>
-        <td>{{inst.duration}} dagen</td>
-        <td>{{inst.startDate}}</td>
+        <td>{{inst.startDate | date: 'M/d/yyyy'}}</td>
+        <td>{{inst.duration}}</td>
+        <td>{{inst.titel}} dagen</td>
+        <td>{{inst.cursusisten}}</td>
     </tr>
 </table>
 <div *ngIf="data.length == 0">Geen informatie gevonden voor deze week!</div>
